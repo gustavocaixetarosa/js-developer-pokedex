@@ -4,6 +4,10 @@ const modalDetail = document.getElementById('modalDetail');
 
 
 function openModal(pokemon) {
+    // Define o valor máximo que um stat pode ter (255 é o valor máximo para stats na PokéAPI)
+    const maxStatValue = 255;
+
+    // Exibe o nome, número, foto, tipos e stats do Pokémon com barras
     modalDetail.innerHTML = `
         <h2>${pokemon.name}</h2>
         <p>#${pokemon.number}</p>
@@ -13,7 +17,14 @@ function openModal(pokemon) {
         <h3>Stats</h3>
         <ul>
             ${pokemon.stats.map(stat => `
-                <li><strong>${stat.name}:</strong> ${stat.base_stat}</li>
+                <li>
+                    <strong>${stat.name}:</strong> ${stat.base_stat}
+                    <div class="stat-bar">
+                        <div class="stat-bar-fill" style="width: ${(stat.base_stat / maxStatValue) * 100}%;">
+                            ${stat.base_stat}
+                        </div>
+                    </div>
+                </li>
             `).join('')}
         </ul>
     `;
